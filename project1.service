@@ -1,0 +1,15 @@
+[Unit]
+Description=Gunicorn instance to serve myproject
+After=network.target
+
+[Service]
+User=root
+Group=www-data
+WorkingDirectory=/home/gslab/taskmanager
+Environment="PATH=/home/gslab/taskmanager/myprojectenv/bin"
+#ExecStart=/home/gslab/taskmanager/myprojectenv/bin/gunicorn -b 0.0.0.0:5000 task:app
+ExecStart=/home/gslab/taskmanager/myprojectenv/bin/gunicorn -k sync --workers=1 --worker-connections=10000 -b 0.0.0.0:5000 task:app --preload
+ExecReload=/bin/kill -HUP $MAINPID
+
+[Install]
+WantedBy=multi-user.target                                  

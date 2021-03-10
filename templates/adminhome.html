@@ -1,0 +1,110 @@
+<!DOCTYPE html>    
+<html>    
+<head>    
+    <title>Admin Home</title>
+    <link rel="stylesheet" type="text/css"  href="{{ url_for('static',filename='assets/style.css')}}" >
+    
+</head>    
+<body>    
+    <h2><center>ADMIN HOME</center></h2><br> 
+    
+   
+    <ul>
+        <li><a href="/admin" class="{{ a1 }}">ALL</a></li>
+        <li><a href="/addmember" class="{{  a2 }}">ADD MEMBER</a></li> 
+        <li><a href="/addtasks/{{admin.id}}" class="{{  a3 }}">ADD TASKS</a></li> 
+        <li><p style="color:  #333;">____________________________________________________________________________________________________________</p></li>
+    
+        <li><p style="color:  #333;">___________________</p></li>
+        <li><a href="/" size=15>Logout</a></li>
+    </ul>
+    {% if all==True %}
+    <table>
+        <tr id="row">
+            <th class="taskname">Task Name</th>
+            <th class="uname">Member Name</th>
+            <th class="taskpriority">Priority</th>
+            <th class="taskdate">Assign-Date</th>
+            <th class="taskstatus">Task Status</th>
+            <th class="taskcomment">Comments</th>
+        </tr>
+        {% for user in admin.Users %}
+          {% for task in user.Tasks%}
+        <tr class="datas">
+            
+            
+            <td class="taskname" id="{{task.name}}">{{ task.name }}</td>
+            <td class="name" id="{{task.Uname}}">{{ user.Uname }}</td>
+            <td class="name" id="{{task.priority}}">{{ task.priority }}</td>
+            <td class="name" id="{{task.date}}">{{ task.date.date() }}</td>
+            <td class="name" id="{{task.status}}">{{ task.status }}</td>
+            <td class="name" id="{{task.comments}}">{{ task.comments }}</td>            
+        
+        </tr>
+          {% endfor %}      
+        {% endfor %}
+    </table>
+    {% else %}
+    
+    {% endif %}
+    
+    {%  if task1==True  %}
+    <h4>List of tasks in admin !!</h4>
+
+    <table>
+        <tr id="row">
+            <th class="status">Status</th>
+            <th class="name">Task Name</th>
+            <th class="desc">Description Name</th>
+            <th class="comment">Comment</th>
+            <th class="priority">Priority</th>
+            <th class="date">Date</th>
+            <th class="action">Action</th>
+            <th class="Remove">Remove</th>
+            <th class="Modify">Modify</th>
+            <th class="Assign">Assign</th>
+        </tr>
+        {% for task in admin.Tasks %}
+        <tr class="datas">
+            {% if task.status == True %}
+            <td class="status">Complete</td>
+            {% else %}
+            <td class="status">Pending</td>
+            {% endif %}
+            <td class="name" id="{{task.name}}">{{ task.name }}</td>
+            <td class="desc">{{ task.desc }}</td>
+            <td class="comment">{{ task.comments }}</td>
+            <td class="priority">{{ task.priority }}</td>
+            <td class="date">{{ task.date.date() }}</td>
+            {% if task.status == True %}
+            <td class="action"><a href="/undoAdmin/{{task.tid}}/{{admin.AdminName}}"><button type="submit">Undo</button></a></td>
+            {% else %}  
+            <td class="action"><a href="/doneAdmin/{{task.tid}}/{{admin.AdminName}}"><button type="submit">Done</button></a></td>
+            {% endif %}
+            <td class="delete"><a href="/deleteAdmin/{{task.tid}}/{{admin.AdminName}}"><button type="submit" id="deleteTask">DELETE</button></a></td>
+            <td class="edit"><a href="/updateAdmin/{{task.tid}}/{{admin.AdminName}}"><button type="submit" id="editTask">EDIT</button></a></td>
+            <td class="assign"><a href="/assign/{{task.tid}}"><button type="submit" id="assignTask">ASSIGN</button></a></td>
+        </tr>
+    {% endfor %}
+    </table>
+    <br>
+    <br>
+    <form action="/addtasks/{{admin.id}}" method="POST">
+        <table class="none">
+            <tr>
+                <td><b><big><label>Add a Task : </label></big></b></td>
+            </tr>
+            <tr>
+            <td><input type="text" name="name" placeholder="Taskname" pattern="^[A-Z].*$"></td>
+            <td><textarea name="desc" rows="4" cols="30" placeholder="Enter Description here..." maxlength="100" required></textarea></td>
+            <td><textarea name="comments" rows="4" cols="40" placeholder="Enter Comments here..." maxlength="100" required></textarea></td>
+            <td>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<input type="text" name="priority" placeholder="Priority"></td>
+            <td>&emsp;&emsp;<button type="submit" id="submitCreate"> Create </button></td>
+            </tr>
+        </table>
+    </form>
+    {% else %}
+    
+    {% endif %}
+</body>    
+</html>

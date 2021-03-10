@@ -1,0 +1,41 @@
+<html>
+    <head>
+        <title>Select member to assign Task</title>
+        <!-- href="/static/assets/style.css"-->
+        <link rel="stylesheet" type="text/css"  href="{{ url_for('static',filename='assets/style.css')}}" >
+    </head>
+<body>
+    <h1><center>ADMIN HOME</center></h1>
+    <ul>
+        <li><a href="/admin" class="{{ a1 }}">ALL</a></li>
+        <li><a href="/addmember" class="{{  a2 }}">ADD MEMBER</a></li> 
+        <li><a href="/addtasks/{{admin.id}}" class="{{  a3 }}">ADD TASKS</a></li> 
+        <li><p style="color:  #333;">____________________________________________________________________________________________________________</p></li>
+    
+        <li><p style="color:  #333;">___________________</p></li>
+        <li><a href="/" size=15>Logout</a></li>
+    </ul>
+   
+   {% if admin.Users[0] %}
+    <table>
+        <tr id="row">
+            <th class="uname">Member Name</th>
+            <th class="name">No of Tasks</th>
+            <th class="name">Assign Task</th>
+        </tr>
+        {% for user in admin.Users %}
+        <tr class="datas">
+            <td class="name" id="{{user.Uname}}">{{ user.Uname }}</td>
+            <td class="no of tasks">2</td>            
+            <td class="addtask" align="center"><a href="/assign/{{tid}}/{{user.Uname}}"><button type="submit" id="addTask">ASSIGN TASK</button></a></td>
+        </tr>
+    {% endfor %}
+    </table>
+    {% else %}
+    <h4>No Tasks in the List !!</h4>
+    {% endif %}
+    
+    <br>
+    
+</body>
+</html>

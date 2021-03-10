@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]> <html lang="en" class="ie6 ielt8"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en" class="ie7 ielt8"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" class="ie8"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--> <html lang="en"> <!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<title>Task Manager | Add member</title>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <link rel="stylesheet" type="text/css"  href="{{ url_for('static',filename='assets/form_style.css')}}" >
+</head>
+<body>
+<br>
+<br>
+<h1><center>Task Manager</center></h1>
+<div class="container">
+  <section id="content">
+    <form method="post" action="/addmember">
+      <h1>Add Member Form</h1>
+      <div>
+        <input type="text" name="Uname" placeholder="Username" required="" id="username" />
+      </div>
+      <div>
+        <input type="password" name="Pass" placeholder="Password" required="" id="password" />
+      </div>
+      <div>
+        <button type="submit" id="addmember" value="Register">Add</button>
+        
+      </div>
+    </form><!-- form -->
+
+  </section><!-- content -->
+</div><!-- container -->
+</body>
+</html>

@@ -1,0 +1,92 @@
+<html>
+    <head>
+        <title>Task Manager</title>
+        <!-- href="/static/assets/style.css"-->
+        <link rel="stylesheet" type="text/css"  href="{{ url_for('static',filename='assets/style.css')}}" >
+    </head>
+<body>
+    <h1><center>Task Manager</center></h1>
+
+    <ul>
+        <li><a href="/tasks" class="{{ a1 }}">ALL</a></li>
+        <li><a href="/pending/{{user.Uname}}" class="{{ a2 }}">Pending</a></li>
+        <li><a href="/completed/{{user.Uname}}" class="{{ a3 }}">Completed</a></li>
+        <li><p style="color:  #333;">____________________________________________________________________________________________________________</p></li>
+        <li><a>User : {{user.Uname}}</a></li>
+        <li><p style="color:  #333;">___________________</p></li>
+        <li><a href="/" size=15>Logout</a></li>
+    </ul>
+    <hr>
+    {% if user.Tasks[0] %}
+    <div span="right">
+    <form action="/search"   method="GET" >
+        <table class="none" id="close">
+        <tr>
+        <td></td><td></td>
+        <td><big><b>Search Reference:</b></big></td>
+        <td><select name="refer" required>
+            <option value="name">Task Name</option>
+            <option value="desc">Description</option>
+            <option value="date">Date</option>
+        </select></td>
+        <td><input type="text" name="key" placeholder="Search Task" size="15" /></td>
+        <td><button type="submit" >Search</button></td>
+        </tr>
+        </table>
+    </form>
+    </div>
+    <table>
+        <tr id="row">
+            <th class="status">Status</th>
+            <th class="name">Task Name</th>
+            <th class="desc">Description Name</th>
+            <th class="comment">Comment</th>
+            <th class="priority">Priority</th>
+            <th class="date">Date</th>
+            <th class="date">Action</th>
+            <th class="func1">Remove</th>
+            <th class="func2">Modify</th>
+        </tr>
+        {% for task in user.Tasks %}
+        <tr class="datas">
+            {% if task.status == True %}
+            <td class="status">Complete</td>
+            {% else %}
+            <td class="status">Pending</td>
+            {% endif %}
+            <td class="name" id="{{task.name}}">{{ task.name }}</td>
+            <td class="desc">{{ task.desc }}</td>
+            <td class="comment">{{ task.comments }}</td>
+            <td class="priority">{{ task.priority }}</td>
+            <td class="date">{{ task.date.date() }}</td>
+            {% if task.status == True %}
+            <td class="action"><a href="/undo/{{task.tid}}/{{user.Uname}}"><button type="submit">Undo</button></a></td>
+            {% else %}  
+            <td class="action"><a href="/done/{{task.tid}}/{{user.Uname}}"><button type="submit">Done</button></a></td>
+            {% endif %}
+            <td class="delete"><a href="/delete/{{task.tid}}/{{user.Uname}}"><button type="submit" id="deleteTask">DELETE</button></a></td>
+            <td class="edit"><a href="/update/{{task.tid}}/{{user.Uname}}"><button type="submit" id="editTask">EDIT</button></a></td>
+        </tr>
+    {% endfor %}
+    </table>
+    {% else %}
+    <h4>No Tasks in the List !!</h4>
+    {% endif %}
+    <br>
+    <br>
+    <form action="/add/{{user.id}}" method="POST">
+        <table class="none">
+            <tr>
+                <td><b><big><label>Add a Task : </label></big></b></td>
+            </tr>
+            <tr>
+            <td><input type="text" name="name" placeholder="Taskname" pattern="^[A-Z].*$"></td>
+            <td><textarea  name="desc" rows="4" cols="30" placeholder="Enter Description here..." maxlength="100" required></textarea></td>
+            <td><textarea name="comment" rows="6" cols="30" placeholder="Enter Comments here..." maxlength="100" required></textarea></td>
+            <td><input type="text" name="priority" placeholder="Priority"></td>
+            <td><button type="submit" id="submitCreate"> Create </button></td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>

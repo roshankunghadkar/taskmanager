@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>update</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body>
+<div class="content">
+    <h1 style="text-align: center">Update Task</h1>
+
+    <div class="form">
+        <form action="/updateAdmin/{{id}}/{{admin.AdminName}}" method="POST">
+
+            <table>
+                <tr>
+                    <td>Task Name</td><td><input type="text" name="name" value="{{ task.name }}" pattern="^[A-Z].*$" placeholder="{{ task.name }} "></td>
+                </tr>
+                <tr>
+                    <td>Description</td><td><textarea type="text" name="desc" rows=3 cols=30 maxlength="100"  placeholder="{{ task.desc }}" required> {{ task.desc }} </textarea></td>
+                </tr>
+                <tr>
+                    <td>Comments</td><td><textarea type="text" name="comments" rows=3 cols=30 maxlength="100"  placeholder="{{ task.comments }}" required> {{ task.comments }} </textarea></td>
+                </tr>
+                <tr>
+                    <td>Priority</td><td><textarea type="text" name="priority" rows=3 cols=30 maxlength="100"  placeholder="{{ task.priority }}" required> {{ task.priority }} </textarea></td>
+                </tr>
+            </table>
+
+            <center><button type="submit" id="submitUpdate"> Update </button></center>
+        </form>
+    </div>
+</div>
+</body>
+</html>
